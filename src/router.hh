@@ -55,6 +55,19 @@ class Router
   // The router's collection of network interfaces
   std::vector<AsyncNetworkInterface> interfaces_ {};
 
+  // A single forwarding-table entry (a route).
+  struct RouteEntry
+  {
+    uint32_t prefix {};                  // network prefix to match against
+    uint8_t prefix_length {};            // number of significant high-order bits
+    std::optional<Address> next_hop {};  // empty => destination is directly attached
+    size_t interface_num {};             // which interface to forward out of
+  };
+  std::vector<RouteEntry> routes_ {};
+
+  // Forward a single datagram according to the longest-prefix-matching route (or drop it).
+  void route_one( InternetDatagram dgram );
+
 public:
   // Add an interface to the router
   // interface: an already-constructed network interface

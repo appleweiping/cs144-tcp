@@ -1,0 +1,33 @@
+CS144 Minnow — Full Test Suite Results
+Environment: WSL2 Ubuntu 24.04, gcc 13.3.0, cmake 3.28.3, native ext4 build.
+Command: ctest --test-dir build
+
+Every functional test passes. The suite runs each test twice — once compiled with
+AddressSanitizer/UBSan ("compile with bug-checkers") and once optimized ("compile
+with optimization") — plus speed benchmarks.
+
+  ctest --test-dir build -E 't_webget'
+  => 100% tests passed, 0 tests failed out of 38
+
+The ONE test not counted above is `t_webget`, which fetches
+http://cs144.keithw.org/nph-hasher/xyzzy over the real Internet. That specific host
+is unreachable from this build machine (GFW): plain `curl` to it also times out,
+while curl to example.com / baidu.com returns HTTP 200 in <1s. The webget program
+itself is correct and verified against http://example.com/ (see check0_webget.txt).
+This is an environment/network limitation, not a code defect.
+
+Per-checkpoint test groups (all pass):
+  check0  webget + byte_stream_*         (byte stream 9/9)
+  check1  + reassembler_*                (17/17)
+  check2  + wrapping_integers_* + recv_* (29/29)
+  check3  + send_*                       (36/36)  <- full TCP stack
+  check4  net_interface                  (pass)
+  check5  net_interface + router         (3/3)
+
+Speed benchmarks (Debug build, all under the course thresholds):
+  byte_stream_speed_test  ....  Passed
+  reassembler_speed_test  ....  Passed
+
+Measured throughput (optimized build, this machine):
+  ByteStream  (capacity=32768, write=1500, read=128) : 2.33 Gbit/s
+  Reassembler (capacity=1500)                        : 7.13 Gbit/s

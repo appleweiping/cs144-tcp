@@ -1,0 +1,7 @@
+CS144 Checkpoint 4 — Network Interface (ARP): ctest results
+Command: ctest --test-dir build -R '^net_interface'  (native ext4, gcc 13.3)
+
+1/2 Test  #1: compile with bug-checkers ........   Passed   33.42 sec
+2/2 Test #35: net_interface ....................   Passed    0.06 sec
+
+100% tests passed, 0 tests failed out of 2

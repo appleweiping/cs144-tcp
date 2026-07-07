@@ -41,6 +41,31 @@ private:
   // IP (known as Internet-layer or network-layer) address of the interface
   Address ip_address_;
 
+  // How long (ms) a learned IP->Ethernet mapping stays valid, and how long to wait before
+  // re-sending an ARP request for the same target IP.
+  static constexpr size_t ARP_MAPPING_TTL_MS = 30'000;
+  static constexpr size_t ARP_REQUEST_INTERVAL_MS = 5'000;
+
+  // A learned mapping from an IP address to an Ethernet address, plus the time it was learned.
+  struct ArpEntry
+  {
+    EthernetAddress eth {};
+    size_t age_ms { 0 };
+  };
+  std::unordered_map<uint32_t, ArpEntry> arp_table_ {};
+
+  // IP addresses for which an ARP request is currently outstanding, and how long ago it was sent.
+  std::unordered_map<uint32_t, size_t> pending_arp_ {};
+
+  // Datagrams waiting for an ARP reply, keyed by their next-hop IP address.
+  std::unordered_map<uint32_t, std::vector<InternetDatagram>> waiting_datagrams_ {};
+
+  // Ethernet frames ready to be handed out by maybe_send().
+  std::queue<EthernetFrame> frames_out_ {};
+
+  // Build and queue an Ethernet frame with the given destination MAC and payload type.
+  void enqueue_frame( const EthernetAddress& dst, uint16_t type, std::vector<Buffer> payload );
+
 public:
   // Construct a network interface with given Ethernet (network-access-layer) and IP (internet-layer)
   // addresses

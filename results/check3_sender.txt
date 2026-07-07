@@ -1,0 +1,13 @@
+CS144 Checkpoint 3 — TCP Sender: ctest results
+Command: ctest --test-dir build -R '^send'  (native ext4, gcc 13.3)
+
+2/8 Test #28: send_connect .....................   Passed    0.06 sec
+3/8 Test #29: send_transmit ....................   Passed    1.60 sec
+4/8 Test #30: send_retx ........................   Passed    0.03 sec
+5/8 Test #31: send_window ......................   Passed    0.21 sec
+6/8 Test #32: send_ack .........................   Passed    0.02 sec
+7/8 Test #33: send_close .......................   Passed    0.03 sec
+8/8 Test #34: send_extra .......................   Passed    0.08 sec
+
+100% tests passed, 0 tests failed out of 8
+Full check3 (byte_stream + reassembler + wrapping + recv + send): all pass.

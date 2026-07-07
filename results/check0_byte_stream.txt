@@ -1,0 +1,14 @@
+CS144 Checkpoint 0 — Reliable Byte Stream: ctest results
+Command: ctest --test-dir build -R '^byte_stream_'  (native ext4, gcc 13.3, Ubuntu 24.04)
+
+1/9 Test  #1: compile with bug-checkers ........   Passed  171.88 sec
+2/9 Test  #3: byte_stream_basics ...............   Passed    0.18 sec
+3/9 Test  #4: byte_stream_capacity .............   Passed    0.08 sec
+4/9 Test  #5: byte_stream_one_write ............   Passed    0.25 sec
+5/9 Test  #6: byte_stream_two_writes ...........   Passed    0.28 sec
+6/9 Test  #7: byte_stream_many_writes ..........   Passed    0.80 sec
+7/9 Test  #8: byte_stream_stress_test ..........   Passed    0.47 sec
+8/9 Test #37: compile with optimization ........   Passed   68.66 sec
+9/9 Test #38: byte_stream_speed_test ...........   Passed    1.65 sec
+
+100% tests passed, 0 tests failed out of 9

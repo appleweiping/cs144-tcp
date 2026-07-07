@@ -9,8 +9,23 @@ using namespace std;
 
 void get_URL( const string& host, const string& path )
 {
-  cerr << "Function called: get_URL(" << host << ", " << path << ")\n";
-  cerr << "Warning: get_URL() has not been implemented yet.\n";
+  // Establish a TCP connection to the web server on the standard HTTP port (80).
+  TCPSocket socket;
+  socket.connect( Address( host, "http" ) );
+
+  // Send a minimal HTTP/1.1 GET request. We ask the server to close the connection
+  // after responding so that we can detect the end of the reply via EOF.
+  const string request = "GET " + path + " HTTP/1.1\r\n" + "Host: " + host + "\r\n" + "Connection: close\r\n\r\n";
+  socket.write( request );
+
+  // Read and print the entire response (headers + body) until the server closes the connection.
+  string buffer;
+  while ( not socket.eof() ) {
+    socket.read( buffer );
+    cout << buffer;
+  }
+
+  socket.close();
 }
 
 int main( int argc, char* argv[] )

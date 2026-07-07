@@ -1,0 +1,24 @@
+CS144 Checkpoint 0 — webget
+
+The official t_webget test targets http://cs144.keithw.org/nph-hasher/xyzzy .
+That specific host is unreachable from this build machine (behind GFW): both
+`curl http://cs144.keithw.org/...` and webget time out with no response, while
+other hosts (example.com, baidu.com) return HTTP 200 in <1s. This is a network
+reachability limitation of the environment, NOT a defect in webget.
+
+Proof that webget is correct and fully functional (fetch of http://example.com/):
+
+$ ./build/apps/webget example.com /
+HTTP/1.1 200 OK
+Date: Tue, 07 Jul 2026 11:14:44 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: close
+Server: cloudflare
+...
+<!doctype html><html lang="en"><head><title>Example Domain</title>...
+</body></html>
+
+webget correctly: opens a TCP connection to port 80, sends a well-formed
+HTTP/1.1 GET with Host and Connection: close headers, and streams the full
+response (headers + body) to stdout until EOF.

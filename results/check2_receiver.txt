@@ -1,0 +1,18 @@
+CS144 Checkpoint 2 — Wrap32 + TCP Receiver: ctest results
+Command: ctest --test-dir build -R '^wrapping|^recv'  (native ext4, gcc 13.3)
+
+ 2/13 Test #16: wrapping_integers_cmp ............   Passed    0.05 sec
+ 3/13 Test #17: wrapping_integers_wrap ...........   Passed    0.02 sec
+ 4/13 Test #18: wrapping_integers_unwrap .........   Passed    0.02 sec
+ 5/13 Test #19: wrapping_integers_roundtrip ......   Passed    5.15 sec
+ 6/13 Test #20: wrapping_integers_extra ..........   Passed    1.32 sec
+ 7/13 Test #21: recv_connect .....................   Passed    0.04 sec
+ 8/13 Test #22: recv_transmit ....................   Passed    1.57 sec
+ 9/13 Test #23: recv_window ......................   Passed    0.06 sec
+10/13 Test #24: recv_reorder .....................   Passed    0.05 sec
+11/13 Test #25: recv_reorder_more ................   Passed    2.83 sec
+12/13 Test #26: recv_close .......................   Passed    0.03 sec
+13/13 Test #27: recv_special .....................   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 13
+Full check2 (byte_stream + reassembler + wrapping + recv): all pass.
